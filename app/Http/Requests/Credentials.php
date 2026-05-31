@@ -24,6 +24,17 @@ class Credentials extends FormRequest
     {
         return [
             "email" => "required|email",
+            "password" => "required|min:6"
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            "email.required" => "L'email est requis",
+            "email.email" => "L'email doit être une adresse email valide",
+            "password.required" => "Le mot de passe est requis",
+            "password.min" => "Le mot de passe doit contenir au moins 6 caractères",
         ];
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Patient extends Model
 {
@@ -27,6 +28,20 @@ class Patient extends Model
     protected $casts = [
         'date_naissance' => 'date',
     ];
+
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($patient) {
+            do {
+                $code = strtoupper(Str::random(10));
+            } while (self::where('code_patient', '=', $code, 'and')->exists());
+
+            $patient->code_patient = $code;
+        });
+    }
 
     public function assurances()
     {
