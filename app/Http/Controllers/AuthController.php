@@ -110,6 +110,9 @@ class AuthController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Auth::logout();
+        request()->session()->invalidate();
+        request()->session()->regenerateToken();
+        return redirect()->route('connexion');
     }
 }

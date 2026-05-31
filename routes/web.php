@@ -28,4 +28,6 @@ Route::middleware(['web'])->group(function () {
     Route::get('financier', [FinancierController::class, 'index'])->name('financier');
 
     Route::get('laborantin', [LaborantinController::class, 'index'])->name('laborantin');
+
+    Route::get('logout', [AuthController::class, 'destroy'])->name('logout');
 });

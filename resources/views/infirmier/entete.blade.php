@@ -69,7 +69,7 @@
                                 <span class="ml-auto bg-red-500 text-white text-xs px-2 py-1 rounded-full">3</span>
                             </a>
                             <div class="border-t border-gray-200 my-2"></div>
-                            <a href="#" class="flex items-center px-4 py-2 text-red-600 hover:bg-red-50 transition">
+                            <a href="{{ route('logout') }}" class="flex items-center px-4 py-2 text-red-600 hover:bg-red-50 transition">
                                 <i class="fas fa-sign-out-alt mr-3"></i>
                                 <span>Se déconnecter</span>
                             </a>
