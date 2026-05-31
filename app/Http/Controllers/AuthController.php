@@ -16,9 +16,9 @@ class AuthController extends Controller
     public function index()
     {
         // User::create([
-        //     'nom' => 'kabongo',
-        //     'prenom' => 'jonathan',
-        //     'email' => 'jonathan@gmail.com',
+        //     'nom' => 'tshiama',
+        //     'prenom' => 'gloria',
+        //     'email' => 'gloria@gmail.com',
         //     'telephone' => '0974133780',
         //     'adresse' => 'limete',
         //     'password' => Hash::make('12345678'),

@@ -23,10 +23,11 @@ class Patients extends FormRequest
     public function rules(): array
     {
         return [
+            "code_patient" => "required|string|max:25",
             "nom" => "required|string|max:255",
             "postnom" => "required|string|max:255",
             "prenom" => "required|string|max:255",
-            "sexe" => "required|in:male,female",
+            "sexe" => "required|in:M,F",
             "date_naissance" => "required|date",
             "telephone" => "required|string|max:255",
             "adresse" => "required|string|max:255",

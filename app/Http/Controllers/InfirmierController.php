@@ -21,7 +21,10 @@ class InfirmierController extends Controller
 
     public function patients(){
         $code_patient = 'REN-PAT-'. strtoupper(Str::random(10));
-        return view('infirmier.patients', compact('code_patient'));
+        $liste_patients = Patient::with('assurances','ordonnance',
+        'rendezvous','dossierMedical','consultations','examens',
+        'hospitalisations','factures')->paginate(10);
+        return view('infirmier.patients', compact('code_patient', 'liste_patients'));
     }
 
     public function patientCreate(Patients $request){
@@ -29,7 +32,7 @@ class InfirmierController extends Controller
         if (!$user) {
             return redirect()->route('login')->with('Erreur', 'Vous devez être connecté pour acceder au dashboard');
         }
-        dd($request->all());
+        //dd($request->all());
         $validated = $request->validated();
         $patient = new Patient();
         $patient->code_patient = $validated['code_patient'];

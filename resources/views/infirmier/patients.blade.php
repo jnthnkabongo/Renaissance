@@ -52,39 +52,46 @@
                     </thead>
                     <tbody class="divide-y divide-gray-200">
                         <!-- Patient 1 -->
-                        <tr class="hover:bg-gray-50 transition">
-                            <td class="px-6 py-4">
-                                <div class="flex items-center space-x-3">
-                                    <div class="w-10 h-10 bg-blue-900 rounded-full flex items-center justify-center text-white font-semibold">
-                                        JP
+                        @forelse ( as )
+                            <tr class="hover:bg-gray-50 transition">
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-10 h-10 bg-blue-900 rounded-full flex items-center justify-center text-white font-semibold">
+                                            JP
+                                        </div>
+                                        <div>
+                                            <p class="font-semibold text-gray-800">Jean Pierre</p>
+                                            <p class="text-sm text-gray-500">jean.pierre@email.com</p>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <p class="font-semibold text-gray-800">Jean Pierre</p>
-                                        <p class="text-sm text-gray-500">jean.pierre@email.com</p>
+                                </td>
+                                <td class="px-6 py-4 text-gray-600">PAT-001</td>
+                                <td class="px-6 py-4 text-gray-600">45 ans</td>
+                                <td class="px-6 py-4 text-gray-600">Cardiologie</td>
+                                <td class="px-6 py-4">
+                                    <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">Actif</span>
+                                </td>
+                                <td class="px-6 py-4 text-gray-600">15/05/2024</td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center space-x-2">
+                                        <button onclick="openViewModal('PAT-001')" class="p-2 hover:bg-blue-100 rounded-lg transition text-blue-600">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                        <button onclick="openEditModal('PAT-001', 'Jean Pierre', 'jean.pierre@email.com', '45', 'Cardiologie', 'actif')" class="p-2 hover:bg-green-100 rounded-lg transition text-green-600">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button onclick="openDeleteModal('PAT-001', 'Jean Pierre')" class="p-2 hover:bg-red-100 rounded-lg transition text-red-600">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
                                     </div>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 text-gray-600">PAT-001</td>
-                            <td class="px-6 py-4 text-gray-600">45 ans</td>
-                            <td class="px-6 py-4 text-gray-600">Cardiologie</td>
-                            <td class="px-6 py-4">
-                                <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">Actif</span>
-                            </td>
-                            <td class="px-6 py-4 text-gray-600">15/05/2024</td>
-                            <td class="px-6 py-4">
-                                <div class="flex items-center space-x-2">
-                                    <button onclick="openViewModal('PAT-001')" class="p-2 hover:bg-blue-100 rounded-lg transition text-blue-600">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    <button onclick="openEditModal('PAT-001', 'Jean Pierre', 'jean.pierre@email.com', '45', 'Cardiologie', 'actif')" class="p-2 hover:bg-green-100 rounded-lg transition text-green-600">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button onclick="openDeleteModal('PAT-001', 'Jean Pierre')" class="p-2 hover:bg-red-100 rounded-lg transition text-red-600">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                
+                            </tr>
+                        @endforelse
+                            
 
                         {{-- <!-- Patient 2 -->
                         <tr class="hover:bg-gray-50 transition">
@@ -281,8 +288,8 @@
                             <label class="block text-sm font-semibold text-gray-700 mb-2">Sexe</label>
                             <select name="sexe" id="sexe" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                 <option value="">Sélectionner le sexe</option>
-                                <option value="male">Masculin</option>
-                                <option value="female">Féminin</option>
+                                <option value="M">Masculin</option>
+                                <option value="F">Féminin</option>
                             </select>
                         </div>
                     </div>
