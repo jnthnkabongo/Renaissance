@@ -15,6 +15,8 @@ Route::middleware(['web'])->group(function () {
     Route::get('infirmier', [InfirmierController::class, 'index'])->name('infirmier');
     Route::get('infirmier/patients', [InfirmierController::class, 'patients'])->name('infirmier.patients');
     Route::post('infirmier/patients/create', [InfirmierController::class, 'patientCreate'])->name('infirmier.patients.create');
+    Route::put('infirmier/patients/update/{id}', [InfirmierController::class, 'patientUpdate'])->name('infirmier.patients.update');
+    Route::delete('infirmier/patients/delete/{id}', [InfirmierController::class, 'patientDelete'])->name('infirmier.patients.delete');
 
     Route::get('infirmier/signes-vitaux', [InfirmierController::class, 'signesVitaux'])->name('infirmier.signes-vitaux');
     Route::get('infirmier/planinig', [InfirmierController::class, 'planinig'])->name('infirmier.planinig');

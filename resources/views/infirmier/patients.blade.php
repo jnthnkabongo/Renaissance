@@ -76,13 +76,13 @@
                                 <td class="px-6 py-4 text-gray-600">{{ $patients->created_at->format('d/m/Y')}}</td>
                                 <td class="px-6 py-4">
                                     <div class="flex items-center space-x-2">
-                                        <button onclick="openViewModal('PAT-001')" class="p-2 hover:bg-blue-100 rounded-lg transition text-blue-600">
+                                        <button onclick="openViewModal('{{ $patients->id }}', '{{ $patients->nom }}', '{{ $patients->prenom }}', '{{ $patients->code_patient }}', '{{ $patients->date_naissance->format('d/m/Y') }}', '{{ $patients->sexe }}', '{{ $patients->telephone }}', '{{ $patients->adresse }}', '{{ $patients->created_at->format('d/m/Y') }}')" class="p-2 hover:bg-blue-100 rounded-lg transition text-blue-600">
                                             <i class="fas fa-eye"></i>
                                         </button>
-                                        <button onclick="openEditModal('PAT-001', 'Jean Pierre', 'jean.pierre@email.com', '45', 'Cardiologie', 'actif')" class="p-2 hover:bg-green-100 rounded-lg transition text-green-600">
+                                        <button onclick="openEditModal('{{ $patients->id }}', '{{ $patients->nom }}', '{{ $patients->postnom }}', '{{ $patients->prenom }}', '{{ $patients->sexe }}', '{{ $patients->date_naissance->format('Y-m-d') }}', '{{ $patients->telephone }}', '{{ $patients->adresse }}', '{{ $patients->groupe_sanguin ?? '' }}', '{{ $patients->etat_civil ?? '' }}')" class="p-2 hover:bg-green-100 rounded-lg transition text-green-600">
                                             <i class="fas fa-edit"></i>
                                         </button>
-                                        <button onclick="openDeleteModal('PAT-001', 'Jean Pierre')" class="p-2 hover:bg-red-100 rounded-lg transition text-red-600">
+                                        <button onclick="openDeleteModal('{{ $patients->id }}', '{{ $patients->nom }} {{ $patients->prenom }}')" class="p-2 hover:bg-red-100 rounded-lg transition text-red-600">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </div>
@@ -216,41 +216,75 @@
                         </button>
                     </div>
                 </div>
-                <form class="p-6 space-y-4" id="editPatientForm">
-                    <input type="hidden" id="editPatientId">
+                <form class="p-6 space-y-4" method="POST" action="{{ route('infirmier.patients.update') }}" id="editPatientForm">
+                    @csrf
+                    <input type="hidden" name="_method" value="PUT">
+                    <input type="hidden" id="editPatientId" name="id">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Nom complet</label>
-                            <input type="text" id="editPatientName" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Nom du patient">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Nom</label>
+                            <input type="text" name="nom" id="editPatientNom" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Nom du patient">
                         </div>
                         <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
-                            <input type="email" id="editPatientEmail" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="email@exemple.com">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Postnom</label>
+                            <input type="text" name="postnom" id="editPatientPostnom" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Postnom du patient">
                         </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Âge</label>
-                            <input type="number" id="editPatientAge" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Âge">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Prénoms</label>
+                            <input type="text" name="prenom" id="editPatientPrenom" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Prénoms du patient">
                         </div>
                         <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Service</label>
-                            <select id="editPatientService" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                <option value="">Sélectionner un service</option>
-                                <option value="cardiologie">Cardiologie</option>
-                                <option value="urgence">Urgences</option>
-                                <option value="pediatrie">Pédiatrie</option>
-                                <option value="chirurgie">Chirurgie</option>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Sexe</label>
+                            <select name="sexe" id="editPatientSexe" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Sélectionner le sexe</option>
+                                <option value="M">Masculin</option>
+                                <option value="F">Féminin</option>
                             </select>
                         </div>
                     </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-2">Statut</label>
-                        <select id="editPatientStatus" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                            <option value="actif">Actif</option>
-                            <option value="hospitalise">Hospitalisé</option>
-                            <option value="sortie">Sorti</option>
-                        </select>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Date de naissance</label>
+                            <input type="date" name="date_naissance" id="editPatientDateNaissance" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Téléphone</label>
+                            <input type="tel" name="telephone" id="editPatientTelephone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="0974133780">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Adresse</label>
+                            <input type="text" name="adresse" id="editPatientAdresse" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Adresse du patient">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Groupe sanguin</label>
+                            <select name="groupe_sanguin" id="editPatientGroupeSanguin" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Sélectionner</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">État civil</label>
+                            <select name="etat_civil" id="editPatientEtatCivil" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                <option value="">Sélectionner</option>
+                                <option value="celibataire">Célibataire</option>
+                                <option value="marie">Marié(e)</option>
+                                <option value="divorce">Divorcé(e)</option>
+                                <option value="veuf">Veuf(ve)</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="flex justify-end space-x-3 pt-4">
                         <button type="button" onclick="closeEditModal()" class="px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition text-gray-700">
@@ -278,33 +312,33 @@
                 <div class="p-6">
                     <div class="flex items-center space-x-4 mb-6">
                         <div class="w-20 h-20 bg-blue-900 rounded-full flex items-center justify-center text-white text-2xl font-bold">
-                            JP
+                            <span id="viewPatientInitials">PA</span>
                         </div>
                         <div>
-                            <h3 class="text-2xl font-bold text-gray-800">Jean Pierre</h3>
-                            <p class="text-gray-500">PAT-001</p>
+                            <h3 class="text-2xl font-bold text-gray-800"><span id="viewPatientNom"></span> <span id="viewPatientPrenom"></span></h3>
+                            <p class="text-gray-500" id="viewPatientCode"></p>
                         </div>
                     </div>
                     <div class="grid grid-cols-2 gap-4">
                         <div class="bg-gray-50 p-4 rounded-lg">
-                            <p class="text-sm text-gray-500">Email</p>
-                            <p class="font-semibold text-gray-800">jean.pierre@email.com</p>
+                            <p class="text-sm text-gray-500">Date de naissance</p>
+                            <p class="font-semibold text-gray-800" id="viewPatientDateNaissance"></p>
                         </div>
                         <div class="bg-gray-50 p-4 rounded-lg">
-                            <p class="text-sm text-gray-500">Âge</p>
-                            <p class="font-semibold text-gray-800">45 ans</p>
+                            <p class="text-sm text-gray-500">Sexe</p>
+                            <p class="font-semibold text-gray-800" id="viewPatientSexe"></p>
                         </div>
                         <div class="bg-gray-50 p-4 rounded-lg">
-                            <p class="text-sm text-gray-500">Service</p>
-                            <p class="font-semibold text-gray-800">Cardiologie</p>
+                            <p class="text-sm text-gray-500">Téléphone</p>
+                            <p class="font-semibold text-gray-800" id="viewPatientTelephone"></p>
                         </div>
                         <div class="bg-gray-50 p-4 rounded-lg">
-                            <p class="text-sm text-gray-500">Statut</p>
-                            <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">Actif</span>
+                            <p class="text-sm text-gray-500">Adresse</p>
+                            <p class="font-semibold text-gray-800" id="viewPatientAdresse"></p>
                         </div>
                         <div class="bg-gray-50 p-4 rounded-lg col-span-2">
                             <p class="text-sm text-gray-500">Date d'admission</p>
-                            <p class="font-semibold text-gray-800">15/05/2024</p>
+                            <p class="font-semibold text-gray-800" id="viewPatientDateAdmission"></p>
                         </div>
                     </div>
                 </div>
@@ -348,13 +382,17 @@
             }
 
             // Edit Modal
-            function openEditModal(id, name, email, age, service, status) {
+            function openEditModal(id, nom, postnom, prenom, sexe, dateNaissance, telephone, adresse, groupeSanguin, etatCivil) {
                 document.getElementById('editPatientId').value = id;
-                document.getElementById('editPatientName').value = name;
-                document.getElementById('editPatientEmail').value = email;
-                document.getElementById('editPatientAge').value = age;
-                document.getElementById('editPatientService').value = service.toLowerCase();
-                document.getElementById('editPatientStatus').value = status;
+                document.getElementById('editPatientNom').value = nom;
+                document.getElementById('editPatientPostnom').value = postnom;
+                document.getElementById('editPatientPrenom').value = prenom;
+                document.getElementById('editPatientSexe').value = sexe;
+                document.getElementById('editPatientDateNaissance').value = dateNaissance;
+                document.getElementById('editPatientTelephone').value = telephone;
+                document.getElementById('editPatientAdresse').value = adresse;
+                document.getElementById('editPatientGroupeSanguin').value = groupeSanguin;
+                document.getElementById('editPatientEtatCivil').value = etatCivil;
                 document.getElementById('editModal').classList.remove('hidden');
                 document.getElementById('editModal').classList.add('flex');
             }
@@ -365,7 +403,16 @@
             }
 
             // View Modal
-            function openViewModal(id) {
+            function openViewModal(id, nom, prenom, code, dateNaissance, sexe, telephone, adresse, dateAdmission) {
+                document.getElementById('viewPatientInitials').textContent = (nom.charAt(0) + prenom.charAt(0)).toUpperCase();
+                document.getElementById('viewPatientNom').textContent = nom;
+                document.getElementById('viewPatientPrenom').textContent = prenom;
+                document.getElementById('viewPatientCode').textContent = code;
+                document.getElementById('viewPatientDateNaissance').textContent = dateNaissance;
+                document.getElementById('viewPatientSexe').textContent = sexe === 'M' ? 'Masculin' : 'Féminin';
+                document.getElementById('viewPatientTelephone').textContent = telephone;
+                document.getElementById('viewPatientAdresse').textContent = adresse;
+                document.getElementById('viewPatientDateAdmission').textContent = dateAdmission;
                 document.getElementById('viewModal').classList.remove('hidden');
                 document.getElementById('viewModal').classList.add('flex');
             }
@@ -425,7 +472,7 @@
             });
 
             // Form validation for Edit Patient Modal
-            const editFormFields = ['editPatientName', 'editPatientEmail', 'editPatientAge', 'editPatientService', 'editPatientStatus'];
+            const editFormFields = ['editPatientNom', 'editPatientPostnom', 'editPatientPrenom', 'editPatientSexe', 'editPatientDateNaissance', 'editPatientTelephone', 'editPatientAdresse', 'editPatientGroupeSanguin', 'editPatientEtatCivil'];
             
             function checkEditForm() {
                 let allFilled = true;
@@ -463,8 +510,8 @@
 
             // Check edit form when opening modal
             const originalOpenEditModal = openEditModal;
-            openEditModal = function(id, name, email, age, service, status) {
-                originalOpenEditModal(id, name, email, age, service, status);
+            openEditModal = function(id, nom, postnom, prenom, sexe, dateNaissance, telephone, adresse, groupeSanguin, etatCivil) {
+                originalOpenEditModal(id, nom, postnom, prenom, sexe, dateNaissance, telephone, adresse, groupeSanguin, etatCivil);
                 setTimeout(checkEditForm, 0);
             };
 
