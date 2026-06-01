@@ -50,6 +50,21 @@ class InfirmierController extends Controller
         return redirect()->route('infirmier.patients')->with('success', 'Patient créé avec succès');
     }
 
+    public function patientUpdate(){
+
+    }
+
+    public function patientDelete(){
+
+    }
+
+    public function signesVitaux(){
+        $liste_patients = Patient::with('assurances','ordonnances',
+        'consultations','examens',
+        'hospitalisations','factures')->paginate(2);
+        return view('infirmier.signes-vitaux', compact('liste_patients'));
+    }
+
     /**
      * Show the form for creating a new resource.
      */

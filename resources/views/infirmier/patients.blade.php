@@ -58,7 +58,7 @@
                                 <td class="px-6 py-4">
                                     <div class="flex items-center space-x-3">
                                         <div class="w-10 h-10 bg-blue-900 rounded-full flex items-center justify-center text-white font-semibold">
-                                            PA
+                                            {{ substr($patients->nom, 0, 1) . substr($patients->prenom, 0, 1) }}
                                         </div>
                                         <div>
                                             <p class="font-semibold text-gray-800">{{ $patients->nom }}</p>
@@ -76,7 +76,7 @@
                                 <td class="px-6 py-4 text-gray-600">{{ $patients->created_at->format('d/m/Y')}}</td>
                                 <td class="px-6 py-4">
                                     <div class="flex items-center space-x-2">
-                                        <button onclick="openViewModal('{{ $patients->id }}', '{{ $patients->nom }}', '{{ $patients->prenom }}', '{{ $patients->code_patient }}', '{{ $patients->date_naissance->format('d/m/Y') }}', '{{ $patients->sexe }}', '{{ $patients->telephone }}', '{{ $patients->adresse }}', '{{ $patients->created_at->format('d/m/Y') }}')" class="p-2 hover:bg-blue-100 rounded-lg transition text-blue-600">
+                                        <button onclick="openViewModal('{{ $patients->id }}', '{{ $patients->nom }}', '{{ $patients->prenom }}', '{{ $patients->code_patient }}', '{{ $patients->date_naissance->format('d/m/Y') }}', '{{ $patients->sexe }}', '{{ $patients->telephone }}', '{{ $patients->adresse }}', '{{ $patients->groupe_sanguin }}', '{{ $patients->created_at->format('d/m/Y') }}')" class="p-2 hover:bg-blue-100 rounded-lg transition text-blue-600">
                                             <i class="fas fa-eye"></i>
                                         </button>
                                         <button onclick="openEditModal('{{ $patients->id }}', '{{ $patients->nom }}', '{{ $patients->postnom }}', '{{ $patients->prenom }}', '{{ $patients->sexe }}', '{{ $patients->date_naissance->format('Y-m-d') }}', '{{ $patients->telephone }}', '{{ $patients->adresse }}', '{{ $patients->groupe_sanguin ?? '' }}', '{{ $patients->etat_civil ?? '' }}')" class="p-2 hover:bg-green-100 rounded-lg transition text-green-600">
@@ -330,16 +330,23 @@
                         </div>
                         <div class="bg-gray-50 p-4 rounded-lg">
                             <p class="text-sm text-gray-500">Téléphone</p>
-                            <p class="font-semibold text-gray-800" id="viewPatientTelephone"></p>
+                            <p class="font-semibold text-gray-800" id="viewPatientGroupeSanguin"></p>
                         </div>
                         <div class="bg-gray-50 p-4 rounded-lg">
                             <p class="text-sm text-gray-500">Adresse</p>
+                            <p class="font-semibold text-gray-800" id="viewPatientTelephone"></p>
+                        </div>
+                        <div class="bg-gray-50 p-4 rounded-lg">
+                            <p class="text-sm text-gray-500">Groupe sanguin</p>
                             <p class="font-semibold text-gray-800" id="viewPatientAdresse"></p>
                         </div>
-                        <div class="bg-gray-50 p-4 rounded-lg col-span-2">
+
+                        <div class="bg-gray-50 p-4 rounded-lg">
                             <p class="text-sm text-gray-500">Date d'admission</p>
                             <p class="font-semibold text-gray-800" id="viewPatientDateAdmission"></p>
                         </div>
+
+                       
                     </div>
                 </div>
             </div>
@@ -403,13 +410,14 @@
             }
 
             // View Modal
-            function openViewModal(id, nom, prenom, code, dateNaissance, sexe, telephone, adresse, dateAdmission) {
+            function openViewModal(id, nom, prenom, code, dateNaissance, sexe, groupeSanguin, telephone, adresse, dateAdmission) {
                 document.getElementById('viewPatientInitials').textContent = (nom.charAt(0) + prenom.charAt(0)).toUpperCase();
                 document.getElementById('viewPatientNom').textContent = nom;
                 document.getElementById('viewPatientPrenom').textContent = prenom;
                 document.getElementById('viewPatientCode').textContent = code;
                 document.getElementById('viewPatientDateNaissance').textContent = dateNaissance;
                 document.getElementById('viewPatientSexe').textContent = sexe === 'M' ? 'Masculin' : 'Féminin';
+                document.getElementById('viewPatientGroupeSanguin').textContent = groupeSanguin;
                 document.getElementById('viewPatientTelephone').textContent = telephone;
                 document.getElementById('viewPatientAdresse').textContent = adresse;
                 document.getElementById('viewPatientDateAdmission').textContent = dateAdmission;

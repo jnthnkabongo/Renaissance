@@ -103,7 +103,7 @@
                         <i class="fas fa-pills"></i>
                         <span>Médicaments</span>
                     </a>
-                    <a href="#" class="flex items-center space-x-3 px-4 py-3 hover:bg-white/10 rounded-lg transition">
+                    <a href="{{ route('infirmier.signes-vitaux') }}" class="flex items-center space-x-3 px-4 py-3 hover:bg-white/10 rounded-lg transition">
                         <i class="fas fa-heartbeat"></i>
                         <span>Signes vitaux</span>
                     </a>
