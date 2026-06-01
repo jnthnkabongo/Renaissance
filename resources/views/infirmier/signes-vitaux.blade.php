@@ -119,72 +119,32 @@
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Nom</label>
-                            <input type="text" name="nom" id="nom" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Nom du patient">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Temperature</label>
+                            <input class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="35' Celcius" type="number" name="temperature" id="temperature">
                         </div>
                             <div>
-                                <label class="block text-sm font-semibold text-gray-700 mb-2">Postnom</label>
-                                <input type="text" name="postnom" id="postnom" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Postnom du patient">
+                                <label class="block text-sm font-semibold text-gray-700 mb-2">Poids</label>
+                                <input class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="65 Kilos" type="number" name="poids" id="poids">
                             </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Prénoms</label>
-                            <input type="text" name="prenom" id="prenom" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Prénoms du patient">
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Taille</label>
+                            <input class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="170 Cm" type="number" name="taille" id="taille">
                         </div>
                         <div>
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Sexe</label>
-                            <select name="sexe" id="sexe" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
-                                <option value="">Sélectionner le sexe</option>
-                                <option value="M">Masculin</option>
-                                <option value="F">Féminin</option>
-                            </select>
+                            <label class="block text-sm font-semibold text-gray-700 mb-2">Tension arterielle</label>
+                            <input class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="10 Bdps" type="number" name="tension_arterielle" id="tension_arterielle">
                         </div>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label for="">Date de naissance</label>
-                            <input class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" type="date" name="date_naissance" id="date_naissance">
+                            <label for="">Frequence cardiaque</label>
+                            <input class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="10" type="tel" name="frequence_cardiaque" id="frequence_cardiaque">
                         </div>
                         <div>
-                            <label for="">Téléphone</label>
-                            <input class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="0974133780" type="tel" name="telephone" id="telephone">
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>
-                            <label for="">Adresse</label>
-                            <input class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Addresse du patient" type="text" name="adresse" id="adresse">
-                        </div>
-                        <div>
-                            <label for="">Groupe sanguin</label>
-                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" name="groupe_sanguin" id="groupe_sanguin">
-                                <option value="">Sélectionner</option>
-                                <option value="A+">A+</option>
-                                <option value="A-">A-</option>
-                                <option value="B+">B+</option>
-                                <option value="B-">B-</option>
-                                <option value="AB+">AB+</option>
-                                <option value="AB-">AB-</option>
-                                <option value="O+">O+</option>
-                                <option value="O-">O-</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div>    
-                            <label class="block text-sm font-semibold text-gray-700 mb-2">Etat civile</label>
-                            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" name="etat_civil" id="etat_civil">
-                                <option value="">Sélectionner</option>
-                                <option value="celibataire">Célibataire</option>
-                                <option value="marie">Marié(e)</option>
-                                <option value="divorce">Divorcé(e)</option>
-                                <option value="veuf">Veuf(ve)</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="">Code patient</label>
-                            <input type="text" name="code_patient" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"  readonly>
+                            <label for="">Saturation</label>
+                            <input class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="20" type="tel" name="saturation" id="saturation">
                         </div>
                     </div>
                     <div class="flex justify-end space-x-3 pt-4">

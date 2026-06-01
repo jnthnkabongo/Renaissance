@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Patients;
+use App\Http\Requests\SignesVitaux;
 use App\Models\Patient;
+use App\Models\SignesVitaux as ModelsSignesVitaux;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -63,6 +65,26 @@ class InfirmierController extends Controller
         'consultations','examens',
         'hospitalisations','factures')->paginate(2);
         return view('infirmier.signes-vitaux', compact('liste_patients'));
+    }
+
+    public function signesVitauxCreate(SignesVitaux $request){
+        $user = Auth::user();
+
+        if (!$user) {
+            return redirect()->route('login')->with('Erreur', 'Vous devez être connecté pour acceder au dashboard');
+        }
+
+        $validated = $request->validated();
+        $signesVitaux = new ModelsSignesVitaux();
+        $signesVitaux->temperature = $validated['temperature'];
+        $signesVitaux->poids = $validated['poids'];
+        $signesVitaux->taille = $validated['taille'];
+        $signesVitaux->tension_arterielle = $validated['tension_arterielle'];
+        $signesVitaux->frequence_cardiaque = $validated['frequence_cardiaque'];
+        $signesVitaux->saturation = $validated['saturation'];
+        $signesVitaux->save();
+
+        return redirect()->route('infirmier.signes-vitaux')->with('success', 'Patient créé avec succès');
     }
 
     /**
