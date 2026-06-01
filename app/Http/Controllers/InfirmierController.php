@@ -21,9 +21,9 @@ class InfirmierController extends Controller
 
     public function patients(){
         $code_patient = 'REN-PAT-'. strtoupper(Str::random(10));
-        $liste_patients = Patient::with('assurances','ordonnance',
-        'rendezvous','dossierMedical','consultations','examens',
-        'hospitalisations','factures')->paginate(10);
+        $liste_patients = Patient::with('assurances','ordonnances',
+        'consultations','examens',
+        'hospitalisations','factures')->paginate(2);
         return view('infirmier.patients', compact('code_patient', 'liste_patients'));
     }
 

@@ -36,7 +36,7 @@ class Patient extends Model
 
         static::creating(function ($patient) {
             do {
-                $code = strtoupper(Str::random(10));
+                $code = 'REN-PAT-'. strtoupper(Str::random(10));
             } while (self::where('code_patient', '=', $code, 'and')->exists());
 
             $patient->code_patient = $code;

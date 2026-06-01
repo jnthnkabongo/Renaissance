@@ -41,10 +41,11 @@
                 <table class="w-full">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Patient</th>
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Patient noms</th>
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">ID Patient</th>
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Âge</th>
-                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Service</th>
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Date naissance</th>
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Sexe</th>
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Téléphone</th>
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Statut</th>
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Date admission</th>
                             <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
@@ -52,26 +53,27 @@
                     </thead>
                     <tbody class="divide-y divide-gray-200">
                         <!-- Patient 1 -->
-                        @forelse ( as )
+                        @forelse ($liste_patients as $patients)
                             <tr class="hover:bg-gray-50 transition">
                                 <td class="px-6 py-4">
                                     <div class="flex items-center space-x-3">
                                         <div class="w-10 h-10 bg-blue-900 rounded-full flex items-center justify-center text-white font-semibold">
-                                            JP
+                                            PA
                                         </div>
                                         <div>
-                                            <p class="font-semibold text-gray-800">Jean Pierre</p>
-                                            <p class="text-sm text-gray-500">jean.pierre@email.com</p>
+                                            <p class="font-semibold text-gray-800">{{ $patients->nom }}</p>
+                                            <p class="text-sm text-gray-500">{{ $patients->prenom }}</p>
                                         </div>
                                     </div>
                                 </td>
-                                <td class="px-6 py-4 text-gray-600">PAT-001</td>
-                                <td class="px-6 py-4 text-gray-600">45 ans</td>
-                                <td class="px-6 py-4 text-gray-600">Cardiologie</td>
+                                <td class="px-6 py-4 text-gray-600">{{ $patients->code_patient }}</td>
+                                <td class="px-6 py-4 text-gray-600">{{ $patients->date_naissance->format('d/m/Y') }}</td>
+                                <td class="px-6 py-4 text-gray-600">{{ $patients->sexe }}</td>
+                                <td class="px-6 py-4 text-gray-600">{{ $patients->telephone }}</td>
                                 <td class="px-6 py-4">
-                                    <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">Actif</span>
+                                    <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">{{ $patients->adresse }}</span>
                                 </td>
-                                <td class="px-6 py-4 text-gray-600">15/05/2024</td>
+                                <td class="px-6 py-4 text-gray-600">{{ $patients->created_at->format('d/m/Y')}}</td>
                                 <td class="px-6 py-4">
                                     <div class="flex items-center space-x-2">
                                         <button onclick="openViewModal('PAT-001')" class="p-2 hover:bg-blue-100 rounded-lg transition text-blue-600">
@@ -88,169 +90,21 @@
                             </tr>
                         @empty
                             <tr>
-                                
+                                <div>
+                                    Aucun patient enregistré
+                                </div>
                             </tr>
                         @endforelse
-                            
-
-                        {{-- <!-- Patient 2 -->
-                        <tr class="hover:bg-gray-50 transition">
-                            <td class="px-6 py-4">
-                                <div class="flex items-center space-x-3">
-                                    <div class="w-10 h-10 bg-purple-900 rounded-full flex items-center justify-center text-white font-semibold">
-                                        ML
-                                    </div>
-                                    <div>
-                                        <p class="font-semibold text-gray-800">Marie Lambert</p>
-                                        <p class="text-sm text-gray-500">marie.lambert@email.com</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 text-gray-600">PAT-002</td>
-                            <td class="px-6 py-4 text-gray-600">62 ans</td>
-                            <td class="px-6 py-4 text-gray-600">Urgences</td>
-                            <td class="px-6 py-4">
-                                <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-semibold">Hospitalisé</span>
-                            </td>
-                            <td class="px-6 py-4 text-gray-600">18/05/2024</td>
-                            <td class="px-6 py-4">
-                                <div class="flex items-center space-x-2">
-                                    <button onclick="openViewModal('PAT-002')" class="p-2 hover:bg-blue-100 rounded-lg transition text-blue-600">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    <button onclick="openEditModal('PAT-002', 'Marie Lambert', 'marie.lambert@email.com', '62', 'Urgences', 'hospitalise')" class="p-2 hover:bg-green-100 rounded-lg transition text-green-600">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button onclick="openDeleteModal('PAT-002', 'Marie Lambert')" class="p-2 hover:bg-red-100 rounded-lg transition text-red-600">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <!-- Patient 3 -->
-                        <tr class="hover:bg-gray-50 transition">
-                            <td class="px-6 py-4">
-                                <div class="flex items-center space-x-3">
-                                    <div class="w-10 h-10 bg-green-900 rounded-full flex items-center justify-center text-white font-semibold">
-                                        PM
-                                    </div>
-                                    <div>
-                                        <p class="font-semibold text-gray-800">Pierre Martin</p>
-                                        <p class="text-sm text-gray-500">pierre.martin@email.com</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 text-gray-600">PAT-003</td>
-                            <td class="px-6 py-4 text-gray-600">38 ans</td>
-                            <td class="px-6 py-4 text-gray-600">Pédiatrie</td>
-                            <td class="px-6 py-4">
-                                <span class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold">Actif</span>
-                            </td>
-                            <td class="px-6 py-4 text-gray-600">20/05/2024</td>
-                            <td class="px-6 py-4">
-                                <div class="flex items-center space-x-2">
-                                    <button onclick="openViewModal('PAT-003')" class="p-2 hover:bg-blue-100 rounded-lg transition text-blue-600">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    <button onclick="openEditModal('PAT-003', 'Pierre Martin', 'pierre.martin@email.com', '38', 'Pédiatrie', 'actif')" class="p-2 hover:bg-green-100 rounded-lg transition text-green-600">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button onclick="openDeleteModal('PAT-003', 'Pierre Martin')" class="p-2 hover:bg-red-100 rounded-lg transition text-red-600">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <!-- Patient 4 -->
-                        <tr class="hover:bg-gray-50 transition">
-                            <td class="px-6 py-4">
-                                <div class="flex items-center space-x-3">
-                                    <div class="w-10 h-10 bg-red-900 rounded-full flex items-center justify-center text-white font-semibold">
-                                        SD
-                                    </div>
-                                    <div>
-                                        <p class="font-semibold text-gray-800">Sophie Durand</p>
-                                        <p class="text-sm text-gray-500">sophie.durand@email.com</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 text-gray-600">PAT-004</td>
-                            <td class="px-6 py-4 text-gray-600">55 ans</td>
-                            <td class="px-6 py-4 text-gray-600">Cardiologie</td>
-                            <td class="px-6 py-4">
-                                <span class="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-semibold">Sorti</span>
-                            </td>
-                            <td class="px-6 py-4 text-gray-600">10/05/2024</td>
-                            <td class="px-6 py-4">
-                                <div class="flex items-center space-x-2">
-                                    <button onclick="openViewModal('PAT-004')" class="p-2 hover:bg-blue-100 rounded-lg transition text-blue-600">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    <button onclick="openEditModal('PAT-004', 'Sophie Durand', 'sophie.durand@email.com', '55', 'Cardiologie', 'sortie')" class="p-2 hover:bg-green-100 rounded-lg transition text-green-600">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button onclick="openDeleteModal('PAT-004', 'Sophie Durand')" class="p-2 hover:bg-red-100 rounded-lg transition text-red-600">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-
-                        <!-- Patient 5 -->
-                        <tr class="hover:bg-gray-50 transition">
-                            <td class="px-6 py-4">
-                                <div class="flex items-center space-x-3">
-                                    <div class="w-10 h-10 bg-yellow-900 rounded-full flex items-center justify-center text-white font-semibold">
-                                        AB
-                                    </div>
-                                    <div>
-                                        <p class="font-semibold text-gray-800">Antoine Bernard</p>
-                                        <p class="text-sm text-gray-500">antoine.bernard@email.com</p>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="px-6 py-4 text-gray-600">PAT-005</td>
-                            <td class="px-6 py-4 text-gray-600">28 ans</td>
-                            <td class="px-6 py-4 text-gray-600">Urgences</td>
-                            <td class="px-6 py-4">
-                                <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-semibold">Hospitalisé</span>
-                            </td>
-                            <td class="px-6 py-4 text-gray-600">22/05/2024</td>
-                            <td class="px-6 py-4">
-                                <div class="flex items-center space-x-2">
-                                    <button onclick="openViewModal('PAT-005')" class="p-2 hover:bg-blue-100 rounded-lg transition text-blue-600">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                    <button onclick="openEditModal('PAT-005', 'Antoine Bernard', 'antoine.bernard@email.com', '28', 'Urgences', 'hospitalise')" class="p-2 hover:bg-green-100 rounded-lg transition text-green-600">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button onclick="openDeleteModal('PAT-005', 'Antoine Bernard')" class="p-2 hover:bg-red-100 rounded-lg transition text-red-600">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr> --}}
                     </tbody>
                 </table>
 
                 <!-- Pagination -->
-                <div class="px-6 py-4 bg-gray-50 flex items-center justify-between">
-                    <p class="text-sm text-gray-600">Affichage de 1 à 5 sur 156 patients</p>
-                    <div class="flex items-center space-x-2">
-                        <button class="px-3 py-1 border border-gray-300 rounded-lg hover:bg-gray-100 transition text-gray-600">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <button class="px-3 py-1 bg-blue-900 text-white rounded-lg">1</button>
-                        <button class="px-3 py-1 border border-gray-300 rounded-lg hover:bg-gray-100 transition text-gray-600">2</button>
-                        <button class="px-3 py-1 border border-gray-300 rounded-lg hover:bg-gray-100 transition text-gray-600">3</button>
-                        <span class="text-gray-400">...</span>
-                        <button class="px-3 py-1 border border-gray-300 rounded-lg hover:bg-gray-100 transition text-gray-600">32</button>
-                        <button class="px-3 py-1 border border-gray-300 rounded-lg hover:bg-gray-100 transition text-gray-600">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </div>
+                <div class="px-6 py-4 bg-gray-50 justify-end ">
+                    @if ($liste_patients->hasPages())
+                        <div class="bg-primary">
+                            {{ $liste_patients->links() }}
+                        </div>
+                    @endif
                 </div>
             </div>
         </main>
